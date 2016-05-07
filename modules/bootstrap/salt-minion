@@ -1,0 +1,19 @@
+#!/bin/bash
+hostname ${name}
+
+rpm --import https://repo.saltstack.com/yum/redhat/6/x86_64/latest/SALTSTACK-GPG-KEY.pub
+cat >/etc/yum.repos.d/saltstack.repo <<EOS
+[saltstack-repo]
+name=SaltStack repo for RHEL/CentOS 6
+baseurl=https://repo.saltstack.com/yum/redhat/6/\$basearch/latest
+enabled=1
+gpgcheck=1
+gpgkey=https://repo.saltstack.com/yum/redhat/6/\$basearch/latest/SALTSTACK-GPG-KEY.pub
+EOS
+
+yum clean expire-cache
+yum -y update
+
+yum -y install salt-minion
+chkconfig salt-minion on
+service salt-minion start
