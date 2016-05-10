@@ -5,3 +5,4 @@ variable "subnet_bits"        { default = "8" }
 variable "availability_zones" { default = "a,b" }
 variable "trusted_cidrs"      { default = "" }
 variable "key_name"           { default = "" }
+variable "zone_id"            { default = "" }

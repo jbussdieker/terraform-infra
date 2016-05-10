@@ -9,14 +9,17 @@ module "vpc" {
 }
 
 module "bastion" {
-  source             = "modules/cluster"
+  source             = "modules/bastion"
   name               = "bastion"
   template           = "salt-minion"
+  vpc_id             = "${module.vpc.vpc_id}"
   subnets            = "${module.vpc.public_subnets}"
   security_groups    = "${module.vpc.default_security_group}"
   instance_type      = "m3.medium"
   spot_price         = "0.012"
   key_name           = "${var.key_name}"
+  zone_id            = "${var.zone_id}"
+  trusted_cidrs      = "${var.trusted_cidrs}"
 }
 
 module "salt-master" {
